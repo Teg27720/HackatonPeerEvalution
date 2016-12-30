@@ -1,0 +1,64 @@
+#Author: Teg Louis
+#Last Revised: 10/9/2016
+#Program Description: This program decides how much to pay hackathon contestants based on the jackpot and answers to a survey...
+#Notes: Will not need to change, but will have to pay people through internet service in future...
+
+import sqlite3
+from collections import Counter
+
+Jackpot = 6000
+
+individualJackpots = {}
+
+#Should be weighted... but oh well. Not important right now...
+Num_of_Equal_Valued_Questions = 0    
+
+People_Entered_for_Question = []
+Answers_to_be_Evaluated_for_Cash = ['FirstPerson', 'SecondPerson', 'ThirdPerson', 'FourthPerson']
+
+
+conn = sqlite3.connect('quizAnswers.db')
+conn.row_factory = sqlite3.Row
+c = conn.cursor()
+
+"""#Note: for loop indexes throught the list of required columns... but working so far
+Num_of_Equal_Valued_Questions = 12
+
+Total_Allotted_for_Single_Question = 0
+
+Total_Allotted_for_Single_Question = Jackpot/Num_of_Equal_Valued_Questions
+
+individualAllottedAmount = 0
+
+cursor = conn.execute("SELECT ThirdPerson FROM quizAnswers")
+for row in cursor:
+    People_Entered_for_Question.append(int(row['ThirdPerson']))
+
+Total_Competitors_for_Question = len(People_Entered_for_Question)
+    
+for i in range(0, len(People_Entered_for_Question)):
+    Counter(People_Entered_for_Question).most_common()[i][-1]
+    individualAllottedAmount = float(Counter(People_Entered_for_Question).most_common()[i][-1])/(Total_Competitors_for_Question)*Total_Allotted_for_Single_Question
+    individualJackpots[Counter(People_Entered_for_Question).most_common()[i][-2]] = individualAllottedAmount
+    #Note, need to add jackpots as we go through the system...
+print individualJackpots"""
+
+
+
+#Not Working
+for j in range(0, len(Answers_to_be_Evaluated_for_Cash)):
+    #cursor = conn.execute("SELECT ThirdPerson FROM quizAnswers")
+    cursor = conn.execute('SELECT (?) FROM quizAnswers', (Answers_to_be_Evaluated_for_Cash[0],))      
+    for row in cursor:
+        People_Entered_for_Question.append(int(row['ThirdPerson']))
+    
+    Total_Competitors_for_Question = len(People_Entered_for_Question)
+    
+    
+
+    for i in range(0, len(People_Entered_for_Question)):
+        Counter(People_Entered_for_Question).most_common()[i][-1]
+        #individualAllottedAmount = float(Counter(People_Entered_for_Question).most_common()[i][-1])/(Total_Competitors_for_Question)*Total_Allotted_for_Single_Question
+        #individualJackpots[Counter(People_Entered_for_Question).most_common()[i][-2]] = individualAllottedAmount
+        #Note, need to add jackpots as we go through the system...
+    #print individualJackpots
